@@ -52,6 +52,7 @@ type Issue struct {
 var _ Client = (*client)(nil)
 
 type client struct {
+	// 我都不知道你在干什么
 	ac *sdk.APIClient
 
 	mut      sync.Mutex // protects botName and email
