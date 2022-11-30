@@ -28,7 +28,7 @@ pipeline {
         stage('Hello2') {
             steps {
                 sh '''echo \'Hello World，i 应该是 可以了 ！！！\'
-                ls -a /home/jenkins/agent/workspaces'''
+                ls -a /home/jenkins/agent/workspace'''
             }
         }
        
