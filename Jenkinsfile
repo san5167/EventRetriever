@@ -1,5 +1,18 @@
 pipeline {
-    agent any  	
+    agent {
+        kubernetes {
+          //cloud 'kubernetes'
+          defaultContainer 'alpine'
+          yaml '''
+            kind: Pod
+            spec:
+              containers:
+              - name: alpine
+                image: alpine:3.17.0
+                imagePullPolicy: Always
+    '''
+        }
+    } 	
 
     stages {
         stage('Hello') {
