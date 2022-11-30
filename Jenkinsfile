@@ -34,7 +34,7 @@ pipeline {
 
         stage('SCM') {
             steps {
-                git 'https://github.com/foo/bar.git'
+                git 'https://github.com/sunmao-dx/EventRetriever.git'
             }
         }
         stage('SonarQube analysis') {
