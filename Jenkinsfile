@@ -43,10 +43,9 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonar-devops';
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
-                    sh '''ls ${scannerHome}
-                            cat ${scannerHome}/bin/sonar-scanner 
-                            ${scannerHome}/bin/sonar-scanner -X
-                            '''
+                    sh "ls ${scannerHome}"
+                    sh "cat ${scannerHome}/bin/sonar-scanner"
+                    sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
