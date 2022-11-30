@@ -10,6 +10,10 @@ pipeline {
               - name: alpine
                 image: alpine:3.17.0
                 imagePullPolicy: Always
+                command:
+                - sleep
+                args:
+                - 99d
     '''
         }
     } 	
