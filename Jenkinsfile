@@ -42,7 +42,10 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'sonar-devops';
+                    def jdkHome = tool 'jdk';
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
+                    sh "ls ${jdkHome}";
+                    sh "export PATH=${jdkHome}/bin:$PATH";
                     sh "ls ${scannerHome}";
                     sh "cat ${scannerHome}/bin/sonar-scanner";
                     sh "${scannerHome}/bin/sonar-scanner -X";
