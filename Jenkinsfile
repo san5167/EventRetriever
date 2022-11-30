@@ -37,6 +37,7 @@ pipeline {
                 git 'https://github.com/sunmao-dx/EventRetriever.git'
             }
         }
+        
         stage('SonarQube analysis') {
             steps {
                 script {
