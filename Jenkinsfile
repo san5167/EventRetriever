@@ -28,7 +28,8 @@ pipeline {
         stage('Hello2') {
             steps {
                 sh '''echo \'Hello World，i 应该是 可以了 -2 ！！！\'
-                ls -a /home/jenkins/agent/workspace'''
+                ls -a /home/jenkins/agent/workspace \'
+                ls'''
             }
         }
 
@@ -45,7 +46,7 @@ pipeline {
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
                     sh "ls ${scannerHome}";
                     sh "cat ${scannerHome}/bin/sonar-scanner";
-                    sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
+//                     sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
                     }
                 }
             }
