@@ -224,6 +224,7 @@ func _init(i gitee_utils.Issue) gitee_utils.Issue {
 
 func main() {
 	fmt.Prinln("github代码库修改，，主函数加入这条日志啦啦啦！！！")
+	fmt.Prinln("看sonar 是否扫描最新的pr代码")
 	http.HandleFunc("/", ServeHTTP)
 	http.ListenAndServe(":8001", nil)
 }
