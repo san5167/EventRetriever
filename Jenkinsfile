@@ -43,14 +43,31 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonar-devops';
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
-                    sh "pwd";
-                    sh "ls";
-                    sh "ls ${scannerHome}";
-                    sh "cat ${scannerHome}/bin/sonar-scanner";
-                    sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
+                        sh "pwd";
+                        sh "ls";
+                        sh "ls ${scannerHome}";
+                        sh "cat ${scannerHome}/bin/sonar-scanner";
+                        sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
                     }
                 }
             }
         }
+        
+        //前
+        stage('sonar load result'){
+            steps{
+                script{
+                        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+                            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+                            if (qg.status != 'OK') {
+                              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
+                        }
+                }
+            }
+        }
+        
+        //后
+        
     }
 }
