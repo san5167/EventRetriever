@@ -2,13 +2,13 @@ pipeline {
     agent {
         kubernetes {
           //cloud 'kubernetes'
-          defaultContainer 'alpine'
+          defaultContainer 'openjdk'
           yaml '''
             kind: Pod
             spec:
               containers:
-              - name: alpine
-                image: alpine:3.17.0
+              - name: openjdk
+                image: openjdk:latest
                 imagePullPolicy: Always
                 command:
                 - sleep
@@ -27,7 +27,7 @@ pipeline {
         // 这里的hello2 是我加的，就是说明，这是stages下的第二个任务 ,就是在pipeline中加单行注释 用 // 就行
         stage('Hello2') {
             steps {
-                sh '''echo \'Hello World，i 应该是 可以了 ！！！\'
+                sh '''echo \'Hello World，i 应该是 可以了 -2 ！！！\'
                 ls -a /home/jenkins/agent/workspace'''
             }
         }
@@ -43,7 +43,9 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonar-devops';
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "ls ${scannerHome}";
+                    sh "cat ${scannerHome}/bin/sonar-scanner";
+                    sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
                     }
                 }
             }
