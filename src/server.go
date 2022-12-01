@@ -156,6 +156,24 @@ func handleIssueEvent(i *gitee.IssueEvent) error {
 }
 
 func handleCommentEvent(i *gitee.NoteEvent) {
+	
+		if b == 0 {  // Noncompliant
+		  doOneMoreThing()
+		} else {
+		  doOneMoreThing()
+		}
+
+		switch i {  // Noncompliant
+		  case 1:
+		    doSomething()
+		  case 2:
+		    doSomething()
+		  case 3:
+		    doSomething()
+		  default:
+		    doSomething()
+		}
+	
 	switch *(i.NoteableType) {
 	case "Issue":
 		go handleIssueCommentEvent(i)
@@ -215,6 +233,11 @@ func _init(i gitee_utils.Issue) gitee_utils.Issue {
 	i.IssueAssignee = "no_assignee"
 	i.IssueLabel = nil
 
+	var target, num = -5, 3
+
+	target =- num  // Noncompliant; target = -3. Is that really what's meant?
+	target =+ num // Noncompliant; target = 3
+	
 	i.IssueTime = time.Now().Format(time.RFC3339)
 	i.IssueUpdateTime = time.Now().Format(time.RFC3339)
 	i.IssueTitle = "no_title"
@@ -225,8 +248,10 @@ func _init(i gitee_utils.Issue) gitee_utils.Issue {
 func main() {
 	fmt.Prinln("github代码库修改，，主函数加入这条日志啦啦啦！！！")
 	fmt.Prinln("看sonar 是否扫描最新的pr代码")
-	a := 1 / 0;
-	b : 2 / 0;
+	var target, num = -5, 3
+
+	target =- num  // Noncompliant; target = -3. Is that really what's meant?
+	target =+ num // Noncompliant; target = 3
 	http.HandleFunc("/", ServeHTTP)
 	http.ListenAndServe(":8001", nil)
 }
