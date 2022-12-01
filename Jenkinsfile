@@ -34,7 +34,7 @@ pipeline {
 
         stage('SCM') {
             steps {
-                git 'https://github.com/sunmao-dx/EventRetriever.git'
+                git 'https://github.com/san5167/MyTestRepository.git'
             }
         }
         
