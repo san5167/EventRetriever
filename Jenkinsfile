@@ -32,11 +32,11 @@ pipeline {
             }
         }
 
-        stage('SCM') {
-            steps {
-                git 'https://github.com/san5167/MyTestRepository.git'
-            }
-        }
+//         stage('SCM') {
+//             steps {
+//                 git 'https://github.com/san5167/MyTestRepository.git'
+//             }
+//         }
         
         stage('SonarQube analysis') {
             steps {
@@ -45,6 +45,7 @@ pipeline {
                     withSonarQubeEnv('sonarqube-scanner') { // If you have configured more than one global server connection, you can specify its name
                         sh "pwd";
                         sh "ls";
+                        sh "cat ./src/server.go";
                         sh "ls ${scannerHome}";
                         sh "cat ${scannerHome}/bin/sonar-scanner";
                         sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=develop";
@@ -60,7 +61,7 @@ pipeline {
                         timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
                             def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
                             if (qg.status != 'OK') {
-                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                                error "Pipeline aborted due to quality gate failure: ${qg.status},${qg}"
                             }
                             
                         }
